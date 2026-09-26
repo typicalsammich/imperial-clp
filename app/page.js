@@ -43,7 +43,7 @@ function PhoneChooser({ compact = false }) {
             <a key={p.display} href={p.href} className="phone-option">
               <span className="phone-label">{p.label}</span>
               <strong>{p.display}</strong>
-              <span className="phone-arrow">↗</span>
+              
             </a>
           ))}
         </div>
@@ -56,7 +56,7 @@ function Compare({ item }) {
   const [value, setValue] = useState(50);
   return (
     <article className="compare-card">
-      <div className="compare-shell">
+      <div className="compare-shell" style={{ "--split": `${value}%` }}>
         <img src={item.after} alt={`${item.title} after`} className="compare-img" />
         <div className="before-mask" style={{ width: `${value}%` }}>
           <img src={item.before} alt={`${item.title} before`} className="compare-img compare-before" />
@@ -94,6 +94,23 @@ export default function Home() {
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const move = (e) => {
+      document.documentElement.style.setProperty("--cursor-x", `${e.clientX}px`);
+      document.documentElement.style.setProperty("--cursor-y", `${e.clientY}px`);
+    };
+    const over = (e) => {
+      const interactive = e.target.closest("a,button,input,select,.compare-range");
+      document.body.classList.toggle("cursor-hover", !!interactive);
+    };
+    window.addEventListener("pointermove", move);
+    document.addEventListener("pointerover", over);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerover", over);
+    };
   }, []);
 
   async function submitForm(e) {
@@ -179,7 +196,7 @@ export default function Home() {
             <p>
               Imperial Crown brings two decades of hands-on experience to lath, plaster, stucco and exterior finish work. The goal is simple: strong prep, clean execution and a finished result that elevates the property.
             </p>
-            <a href="#contact" className="text-link">Start your project <span>→</span></a>
+            <a href="#contact" className="text-link">Start your project </a>
           </div>
         </div>
       </section>
@@ -266,12 +283,18 @@ export default function Home() {
               <a href={p.href} key={p.display}>
                 <span>{p.label}</span>
                 <strong>{p.display}</strong>
-                <i>↗</i>
+                
               </a>
             ))}
           </div>
           <a className="instagram-link" href="https://www.instagram.com/imperial_clp/" target="_blank" rel="noreferrer">
-            <span className="ig-icon">◎</span> @imperial_clp <span>↗</span>
+            <span className="ig-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img">
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.4" cy="6.7" r="1"></circle>
+              </svg>
+            </span> @imperial_clp 
           </a>
         </div>
 
