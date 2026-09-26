@@ -502,3 +502,50 @@ html{
       linear-gradient(0deg,var(--navy) 0%,transparent 24%);
   }
 }
+
+
+/* v8 mobile performance: content should never wait for scroll animation */
+@media (max-width: 800px){
+  .reveal,
+  .reveal.visible,
+  [data-reveal]{
+    opacity:1 !important;
+    transform:none !important;
+    transition:none !important;
+    visibility:visible !important;
+  }
+
+  /* Reduce expensive visual effects while scrolling on phones */
+  .site-header,
+  .mobile-menu,
+  .phone-menu,
+  .carousel-btn{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+
+  .hero-media img{
+    transform:none !important;
+    animation:none !important;
+  }
+
+  .compare-card,
+  .service-card,
+  .process-card,
+  .area-directory a{
+    content-visibility:auto;
+    contain-intrinsic-size:1px 500px;
+  }
+}
+
+/* Respect devices/users asking for reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
