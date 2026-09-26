@@ -295,3 +295,140 @@ html{
   html,body,a,button,input,select,.compare-range{cursor:auto}
   body::before{display:none}
 }
+
+
+/* v3: compact before/after transformation carousel */
+.compare-grid{display:none}
+.compare-carousel-wrap{position:relative}
+.compare-carousel{
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  padding:2px 2px 18px;
+  overscroll-behavior-x:contain;
+}
+.compare-carousel::-webkit-scrollbar{display:none}
+.compare-carousel .compare-card{
+  flex:0 0 min(980px,86vw);
+  scroll-snap-align:center;
+}
+.compare-carousel .compare-shell,
+.compare-carousel .compare-card:first-child .compare-shell{
+  aspect-ratio:16/9;
+  width:100%;
+  max-height:620px;
+}
+.compare-carousel .compare-shell > .compare-img,
+.compare-carousel .before-mask .compare-before{
+  object-fit:contain;
+  object-position:center;
+  background:#07111d;
+}
+.carousel-btn{
+  position:absolute;
+  z-index:12;
+  top:calc(50% - 42px);
+  width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(224,196,143,.55);
+  background:rgba(7,17,29,.88);
+  color:#e0c48f;
+  font-family:Georgia,serif;
+  font-size:34px;
+  line-height:1;
+  display:grid;place-items:center;
+  backdrop-filter:blur(10px);
+  transition:.2s ease;
+}
+.carousel-btn:hover{background:#e0c48f;color:#07111d;transform:scale(1.05)}
+.carousel-btn.prev{left:-22px}
+.carousel-btn.next{right:-22px}
+.carousel-hint{
+  text-align:center;
+  color:#7f8c98;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-top:5px;
+}
+@media(max-width:980px){
+  .compare-carousel .compare-card{flex-basis:92vw}
+  .carousel-btn.prev{left:-10px}
+  .carousel-btn.next{right:-10px}
+}
+@media(max-width:640px){
+  .compare-carousel .compare-card{flex-basis:calc(100vw - 48px)}
+  .compare-carousel .compare-shell,
+  .compare-carousel .compare-card:first-child .compare-shell{aspect-ratio:4/3}
+  .carousel-btn{width:40px;height:40px;font-size:28px}
+}
+
+
+/* v4 mobile navigation + service area directory */
+.hamburger{display:none;background:none;border:0;width:46px;height:46px;padding:10px;position:relative;z-index:92}
+.hamburger span{display:block;height:1px;background:#e0c48f;margin:6px 0;transition:.25s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none}
+
+.service-areas{background:linear-gradient(180deg,#0a1724,#07111d)}
+.area-directory{border-top:1px solid var(--line)}
+.area-directory a{
+  min-height:100px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);transition:.25s;padding:0 8px;
+}
+.area-directory a:hover{padding-left:22px;background:linear-gradient(90deg,rgba(201,163,106,.07),transparent)}
+.area-directory span{font-family:Georgia,"Times New Roman",serif;font-size:clamp(25px,3vw,42px)}
+.area-directory small{text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-size:10px}
+.area-note{margin-top:22px;color:#8995a1;font-size:13px}
+
+@media(max-width:980px){
+  .site-header{grid-template-columns:1fr auto}
+  .hamburger{display:block;justify-self:end}
+  .mobile-menu{
+    position:fixed;display:flex;flex-direction:column;inset:0;background:rgba(5,12,19,.98);
+    backdrop-filter:blur(18px);padding:120px 28px 40px;z-index:90;
+    opacity:0;visibility:hidden;transform:translateY(-12px);transition:.28s ease;
+  }
+  .mobile-menu.open{opacity:1;visibility:visible;transform:none}
+  .mobile-menu>a{font-family:Georgia,"Times New Roman",serif;font-size:36px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .mobile-menu-lines{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mobile-menu-lines a{border:1px solid var(--line);padding:16px;border-radius:4px;font-weight:700}
+  .mobile-menu-lines small{display:block;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-size:9px;margin-bottom:5px}
+}
+@media(max-width:640px){
+  .area-directory a{min-height:82px}
+  .area-directory small{max-width:80px;text-align:right;line-height:1.4}
+  .mobile-menu-lines{grid-template-columns:1fr}
+}
+
+
+/* dedicated SEO service area pages */
+.area-page{min-height:100vh;background:#07111d}
+.area-page-header{height:92px;padding:0 7vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.area-brand img{width:210px;max-height:74px;object-fit:contain}
+.area-hero{min-height:650px;padding:120px 7vw 100px;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 80% 20%,rgba(201,163,106,.14),transparent 32%),linear-gradient(135deg,#0d1d2e,#07111d)}
+.area-hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(52px,7vw,100px);font-weight:400;letter-spacing:-.045em;line-height:.98;max-width:1100px;margin:20px 0 28px}
+.area-hero>p{font-size:19px;line-height:1.8;color:#aeb8c2;max-width:760px}
+.area-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.area-page-section{padding:100px 7vw;display:grid;grid-template-columns:1fr 1fr;gap:8vw;border-top:1px solid var(--line)}
+.area-page-section h2,.area-cities h2,.area-final h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,4.5vw,64px);font-weight:400;margin:14px 0}
+.area-page-section>p{color:#aab4be;line-height:1.9;font-size:17px}
+.area-page-services{display:grid;grid-template-columns:repeat(3,1fr);padding:0 7vw 100px}
+.area-page-services div{padding:28px;border-top:1px solid var(--line);border-right:1px solid var(--line)}
+.area-page-services small{color:var(--gold)}.area-page-services h3{margin:14px 0 0;font-size:20px}
+.area-cities{padding:100px 7vw;background:#0b1927}
+.city-list{display:grid;grid-template-columns:repeat(4,1fr);margin:40px 0;border-top:1px solid var(--line)}
+.city-list span{padding:20px 0;border-bottom:1px solid var(--line);color:#d6dce1}
+.area-cities>p{color:#8f9aa5}
+.area-final{padding:90px 7vw;display:flex;align-items:center;justify-content:space-between;gap:40px}
+@media(max-width:800px){
+ .area-page-header{padding:0 20px}.area-brand img{width:165px}.area-page-header .btn{display:none}
+ .area-hero{padding:100px 24px 70px;min-height:580px}.area-hero h1{font-size:52px}
+ .area-page-section{grid-template-columns:1fr;padding:70px 24px}
+ .area-page-services{grid-template-columns:1fr 1fr;padding:0 24px 70px}
+ .area-cities{padding:70px 24px}.city-list{grid-template-columns:1fr 1fr}
+ .area-final{padding:70px 24px;display:block}.area-final .btn{margin-top:20px}
+}

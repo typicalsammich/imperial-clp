@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 const phones = [
-  { label: "Primary", display: "(951) 880-3103", href: "tel:+19518803103" },
-  { label: "Secondary", display: "(951) 425-0490", href: "tel:+19514250490" }
+  { label: "Diego", display: "(951) 880-3103", href: "tel:+19518803103" },
+  { label: "Isaiah", display: "(951) 425-0490", href: "tel:+19514250490" }
 ];
 
 const services = [
@@ -88,6 +88,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 220);
@@ -146,10 +147,26 @@ export default function Home() {
         <nav>
           <a href="#services">Services</a>
           <a href="#work">Projects</a>
+          <a href="#service-areas">Service Areas</a>
           <a href="#about">About</a>
           <a href="#contact">Estimate</a>
         </nav>
         <PhoneChooser compact />
+        <button className={`hamburger ${menuOpen ? "open" : ""}`} type="button"
+          aria-label="Open navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)}>
+          <span></span><span></span><span></span>
+        </button>
+        <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+          <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+          <a href="#work" onClick={() => setMenuOpen(false)}>Projects</a>
+          <a href="#service-areas" onClick={() => setMenuOpen(false)}>Service Areas</a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Request Estimate</a>
+          <div className="mobile-menu-lines">
+            <a href="tel:+19518803103"><small>Diego</small>(951) 880-3103</a>
+            <a href="tel:+19514250490"><small>Isaiah</small>(951) 425-0490</a>
+          </div>
+        </div>
       </header>
 
       <section className="hero" id="top">
@@ -174,9 +191,9 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-statbar">
-          <div><strong>20</strong><span>Years of experience</span></div>
-          <div><strong>02</strong><span>Direct call lines</span></div>
-          <div><strong>01</strong><span>Standard: exceptional finish</span></div>
+          <div><strong>20+</strong><span>Years of experience</span></div>
+          <div><strong>6</strong><span>Specialized services</span></div>
+          <div><strong>100%</strong><span>Focused on the finish</span></div>
         </div>
       </section>
 
@@ -231,8 +248,19 @@ export default function Home() {
           <p>Selected Imperial Crown work shown with the original project photography you provided.</p>
         </div>
 
-        <div className="compare-grid">
-          {comparisons.map((item) => <Compare item={item} key={item.title} />)}
+        <div className="compare-carousel-wrap">
+          <button className="carousel-btn prev" type="button" aria-label="Previous transformation"
+            onClick={() => document.getElementById("compareCarousel")?.scrollBy({ left: -900, behavior: "smooth" })}>
+            ‹
+          </button>
+          <div className="compare-carousel" id="compareCarousel">
+            {comparisons.map((item) => <Compare item={item} key={item.title} />)}
+          </div>
+          <button className="carousel-btn next" type="button" aria-label="Next transformation"
+            onClick={() => document.getElementById("compareCarousel")?.scrollBy({ left: 900, behavior: "smooth" })}>
+            ›
+          </button>
+          <div className="carousel-hint">Scroll or swipe to explore transformations</div>
         </div>
       </section>
 
@@ -254,6 +282,25 @@ export default function Home() {
             <span>Repair blending</span>
           </div>
         </div>
+      </section>
+
+
+      <section className="section service-areas" id="service-areas">
+        <div className="section-head">
+          <div>
+            <div className="section-kicker">SOUTHERN CALIFORNIA SERVICE AREA</div>
+            <h2>Serving projects across Southern California.</h2>
+          </div>
+          <p>Explore dedicated local pages for lath, plaster and stucco services throughout the regions Imperial Crown serves.</p>
+        </div>
+        <div className="area-directory">
+          <a href="/service-areas/los-angeles-county"><span>Los Angeles County</span><small>View service area</small></a>
+          <a href="/service-areas/san-diego-county"><span>San Diego County</span><small>View service area</small></a>
+          <a href="/service-areas/riverside-county"><span>Riverside County</span><small>View service area</small></a>
+          <a href="/service-areas/san-bernardino-county"><span>San Bernardino County</span><small>View service area</small></a>
+          <a href="/service-areas/orange-county"><span>Orange County</span><small>View service area</small></a>
+        </div>
+        <p className="area-note">Inland Empire service includes communities throughout Riverside and San Bernardino counties.</p>
       </section>
 
       <section className="section process">
