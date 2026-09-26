@@ -476,3 +476,15 @@ html{
     max-width:calc(100vw - 48px);
   }
 }
+
+
+/* v6 mobile hero framing */
+@media (max-width: 720px){
+  .hero-bg{
+    background-position:center center !important;
+  }
+  .hero-bg img,
+  .hero-bg-image{
+    object-position:center center !important;
+  }
+}
