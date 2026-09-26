@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import SiteCursor from "../../SiteCursor";
 
 const areas = {"los-angeles-county": {"name": "Los Angeles County", "region": "Los Angeles County", "intro": "Lath, plaster and stucco craftsmanship for residential and commercial properties throughout Los Angeles County.", "cities": ["Los Angeles", "Long Beach", "Glendale", "Pasadena", "Burbank", "Santa Clarita", "Torrance", "Downey", "Whittier", "Pomona", "West Covina", "Lancaster"]}, "san-diego-county": {"name": "San Diego County", "region": "San Diego County", "intro": "Professional stucco, lath, plaster, repair and exterior finish work for projects throughout San Diego County.", "cities": ["San Diego", "Chula Vista", "Oceanside", "Escondido", "Carlsbad", "El Cajon", "Vista", "San Marcos", "Encinitas", "La Mesa", "National City", "Poway"]}, "riverside-county": {"name": "Riverside County", "region": "Riverside County and the Inland Empire", "intro": "Experienced lath, plaster and stucco services for homes, remodels and commercial properties throughout Riverside County.", "cities": ["Riverside", "Corona", "Moreno Valley", "Temecula", "Murrieta", "Menifee", "Perris", "Lake Elsinore", "Hemet", "Jurupa Valley", "Eastvale", "Beaumont"]}, "san-bernardino-county": {"name": "San Bernardino County", "region": "San Bernardino County and the Inland Empire", "intro": "Exterior plaster, stucco, lath and repair craftsmanship serving communities throughout San Bernardino County.", "cities": ["San Bernardino", "Fontana", "Rancho Cucamonga", "Ontario", "Chino", "Chino Hills", "Redlands", "Rialto", "Upland", "Victorville", "Highland", "Yucaipa"]}, "orange-county": {"name": "Orange County", "region": "Orange County", "intro": "Premium stucco, lath and plaster craftsmanship for remodels, repairs and exterior transformations throughout Orange County.", "cities": ["Anaheim", "Santa Ana", "Irvine", "Huntington Beach", "Garden Grove", "Orange", "Fullerton", "Costa Mesa", "Mission Viejo", "Yorba Linda", "Tustin", "Lake Forest"]}};
 
@@ -22,6 +23,7 @@ export default function ServiceAreaPage({ params }) {
 
   return (
     <main className="area-page">
+      <SiteCursor />
       <header className="area-page-header">
         <Link href="/" className="area-brand"><img src="/brand/imperial-crown-logo.png" alt="Imperial Crown Lath and Plastering" /></Link>
         <Link href="/#contact" className="btn btn-gold">Request an Estimate</Link>

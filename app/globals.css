@@ -432,3 +432,47 @@ html{
  .area-cities{padding:70px 24px}.city-list{grid-template-columns:1fr 1fr}
  .area-final{padding:70px 24px;display:block}.area-final .btn{margin-top:20px}
 }
+
+
+/* v5 comparison sizing: let each supplied photo determine the frame shape */
+.compare-carousel{
+  align-items:flex-start;
+}
+.compare-carousel .compare-card{
+  flex:0 0 auto;
+  width:auto;
+  max-width:min(980px,86vw);
+}
+.compare-carousel .compare-shell,
+.compare-carousel .compare-card:first-child .compare-shell{
+  width:auto;
+  height:min(620px,68vh);
+  max-width:min(980px,86vw);
+  max-height:none;
+  background:transparent;
+}
+.compare-carousel .compare-shell > .compare-img,
+.compare-carousel .before-mask .compare-before{
+  object-fit:cover;
+  object-position:center;
+  background:transparent;
+}
+.compare-carousel .compare-meta{
+  max-width:100%;
+}
+@media(max-width:980px){
+  .compare-carousel .compare-card{width:auto;max-width:92vw}
+  .compare-carousel .compare-shell,
+  .compare-carousel .compare-card:first-child .compare-shell{
+    height:min(560px,62vh);
+    max-width:92vw;
+  }
+}
+@media(max-width:640px){
+  .compare-carousel .compare-card{width:auto;max-width:calc(100vw - 48px)}
+  .compare-carousel .compare-shell,
+  .compare-carousel .compare-card:first-child .compare-shell{
+    height:min(500px,58vh);
+    max-width:calc(100vw - 48px);
+  }
+}
