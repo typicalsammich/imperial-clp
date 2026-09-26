@@ -549,3 +549,39 @@ html{
     scroll-behavior:auto !important;
   }
 }
+
+
+/* v9 iOS Safari fix — never reserve blank section placeholders */
+@media (max-width: 800px){
+  .compare-card,
+  .service-card,
+  .process-card,
+  .area-directory a{
+    content-visibility:visible !important;
+    contain:none !important;
+    contain-intrinsic-size:auto !important;
+  }
+
+  section,
+  .section,
+  .services,
+  .work,
+  .about,
+  .process,
+  .service-areas,
+  .contact,
+  .compare-carousel-wrap,
+  .compare-carousel{
+    content-visibility:visible !important;
+    contain:none !important;
+  }
+
+  .reveal,
+  .reveal.visible,
+  [data-reveal]{
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+    transition:none !important;
+  }
+}
