@@ -1,0 +1,339 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+const phones = [
+  { label: "Primary", display: "(951) 880-3103", href: "tel:+19518803103" },
+  { label: "Secondary", display: "(951) 425-0490", href: "tel:+19514250490" }
+];
+
+const services = [
+  ["Lath & Plaster", "Precise wall systems, clean transitions and durable finishes built for long-term performance."],
+  ["Stucco & Re-Stucco", "Full exterior transformations, finish changes and refreshed curb appeal with craftsmanship you can see."],
+  ["Repairs & Patching", "Thoughtful repair work that blends with the surrounding surface instead of looking like an obvious patch."],
+  ["Additions & Remodels", "Exterior plaster and stucco work for additions, remodels, expansions and property upgrades."],
+  ["Custom Exterior Finishes", "Architectural textures and finish details designed to elevate the look of the property."],
+  ["Outdoor Living Surfaces", "Plaster and stucco finishes for outdoor kitchens, patio structures and custom masonry-adjacent spaces."]
+];
+
+const comparisons = [
+  { before: "/projects/project-1.png", after: "/projects/project-2.png", title: "Commercial Exterior Refresh", tag: "Before / After" },
+  { before: "/projects/project-4.png", after: "/projects/project-5.png", title: "Residential Stucco Transformation", tag: "Before / After" },
+  { before: "/projects/project-6.png", after: "/projects/project-7.png", title: "Exterior Finish Upgrade", tag: "Before / After" },
+  { before: "/projects/project-8.png", after: "/projects/project-9.png", title: "Outdoor Kitchen Finish", tag: "Before / After" },
+  { before: "/projects/project-10.png", after: "/projects/project-11.png", title: "Custom Home Exterior", tag: "Before / After" }
+];
+
+function PhoneChooser({ compact = false }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className={`phone-wrap ${compact ? "compact" : ""}`}>
+      <button className="btn btn-gold" onClick={() => setOpen(v => !v)} aria-expanded={open}>
+        Contact Now
+        <span className="chev">⌄</span>
+      </button>
+      {open && (
+        <div className="phone-menu">
+          <div className="phone-menu-head">
+            <span>Choose a line</span>
+            <button onClick={() => setOpen(false)} aria-label="Close">×</button>
+          </div>
+          {phones.map(p => (
+            <a key={p.display} href={p.href} className="phone-option">
+              <span className="phone-label">{p.label}</span>
+              <strong>{p.display}</strong>
+              <span className="phone-arrow">↗</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Compare({ item }) {
+  const [value, setValue] = useState(50);
+  return (
+    <article className="compare-card">
+      <div className="compare-shell">
+        <img src={item.after} alt={`${item.title} after`} className="compare-img" />
+        <div className="before-mask" style={{ width: `${value}%` }}>
+          <img src={item.before} alt={`${item.title} before`} className="compare-img compare-before" />
+        </div>
+        <div className="compare-line" style={{ left: `${value}%` }}>
+          <span>↔</span>
+        </div>
+        <span className="compare-badge left">BEFORE</span>
+        <span className="compare-badge right">AFTER</span>
+        <input
+          aria-label={`Before and after slider for ${item.title}`}
+          type="range"
+          min="0"
+          max="100"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="compare-range"
+        />
+      </div>
+      <div className="compare-meta">
+        <span>{item.tag}</span>
+        <h3>{item.title}</h3>
+      </div>
+    </article>
+  );
+}
+
+export default function Home() {
+  const [scrolled, setScrolled] = useState(false);
+  const [status, setStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 220);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  async function submitForm(e) {
+    e.preventDefault();
+    setSubmitting(true);
+    setStatus("");
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(fd.entries());
+
+    try {
+      const r = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Unable to send.");
+      setStatus("Thank you — your request was sent. Imperial Crown can follow up with you directly.");
+      e.currentTarget.reset();
+    } catch (err) {
+      setStatus(err.message || "Unable to send right now. Please call us directly.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <main>
+      <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
+        <a className="brand" href="#top" aria-label="Imperial Crown home">
+          <img src="/brand/imperial-crown-logo.png" alt="Imperial Crown Lath and Plastering" />
+        </a>
+        <nav>
+          <a href="#services">Services</a>
+          <a href="#work">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact">Estimate</a>
+        </nav>
+        <PhoneChooser compact />
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-media">
+          <img src="/projects/project-11.png" alt="Finished Imperial Crown exterior project" />
+          <div className="hero-overlay" />
+        </div>
+        <div className="hero-glow hero-glow-one" />
+        <div className="hero-glow hero-glow-two" />
+        <div className="hero-content">
+          <div className="eyebrow reveal">20 YEARS OF CRAFTSMANSHIP</div>
+          <h1 className="reveal reveal-delay">
+            Built with precision.<br />
+            <span>Finished like a statement.</span>
+          </h1>
+          <p className="hero-copy reveal reveal-delay-2">
+            Premium lath, plaster and stucco craftsmanship for homeowners, builders and property owners who care about how the finished work looks.
+          </p>
+          <div className="hero-actions reveal reveal-delay-3">
+            <a className="btn btn-gold" href="#contact">Request an Estimate</a>
+            <a className="btn btn-ghost" href="#work">View Transformations</a>
+          </div>
+        </div>
+        <div className="hero-statbar">
+          <div><strong>20</strong><span>Years of experience</span></div>
+          <div><strong>02</strong><span>Direct call lines</span></div>
+          <div><strong>01</strong><span>Standard: exceptional finish</span></div>
+        </div>
+      </section>
+
+      <section className="trust-strip">
+        <span>RESIDENTIAL</span><i />
+        <span>COMMERCIAL</span><i />
+        <span>REMODELS</span><i />
+        <span>EXTERIOR FINISHES</span><i />
+        <span>REPAIRS</span>
+      </section>
+
+      <section className="section intro" id="about">
+        <div className="section-kicker">IMPERIAL CROWN</div>
+        <div className="intro-grid">
+          <h2>Craftsmanship that makes the finished surface feel intentional.</h2>
+          <div className="intro-copy">
+            <p>
+              Imperial Crown brings two decades of hands-on experience to lath, plaster, stucco and exterior finish work. The goal is simple: strong prep, clean execution and a finished result that elevates the property.
+            </p>
+            <a href="#contact" className="text-link">Start your project <span>→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section services" id="services">
+        <div className="section-head">
+          <div>
+            <div className="section-kicker">WHAT WE DO</div>
+            <h2>Specialized exterior craftsmanship.</h2>
+          </div>
+          <p>From repairs to full exterior transformations, every project is approached with finish quality in mind.</p>
+        </div>
+
+        <div className="service-rail">
+          {services.map((s, i) => (
+            <article className="service-item" key={s[0]}>
+              <span className="service-no">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{s[0]}</h3>
+              <p>{s[1]}</p>
+              <span className="service-mark">✦</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section work" id="work">
+        <div className="section-head">
+          <div>
+            <div className="section-kicker">REAL TRANSFORMATIONS</div>
+            <h2>Move the line. See the difference.</h2>
+          </div>
+          <p>Selected Imperial Crown work shown with the original project photography you provided.</p>
+        </div>
+
+        <div className="compare-grid">
+          {comparisons.map((item) => <Compare item={item} key={item.title} />)}
+        </div>
+      </section>
+
+      <section className="feature-project">
+        <div className="feature-image">
+          <img src="/projects/project-3.png" alt="Finished outdoor living project" />
+        </div>
+        <div className="feature-copy">
+          <div className="section-kicker">DETAIL MATTERS</div>
+          <h2>The finish is what people remember.</h2>
+          <p>
+            Clean edges. Consistent texture. Thoughtful transitions. Imperial Crown focuses on the details that make exterior work feel complete instead of merely finished.
+          </p>
+          <div className="metal-rule" />
+          <div className="mini-grid">
+            <span>Exterior plaster</span>
+            <span>Stucco finishes</span>
+            <span>Custom details</span>
+            <span>Repair blending</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="section process">
+        <div className="section-kicker">A CLEANER PROCESS</div>
+        <h2>Professional from the first call to the final walkthrough.</h2>
+        <div className="process-grid">
+          {[
+            ["01", "Tell us about the project", "Call either line or send the short estimate form with the service you need."],
+            ["02", "Review the scope", "Imperial Crown can discuss the work, project conditions and next steps with you directly."],
+            ["03", "Craft the finish", "The work is completed with an emphasis on preparation, clean execution and appearance."],
+            ["04", "Final walkthrough", "Review the finished work and make sure the details land the way they should."]
+          ].map(([n, h, p]) => (
+            <article key={n}>
+              <span>{n}</span><h3>{h}</h3><p>{p}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact-section" id="contact">
+        <div className="contact-copy">
+          <div className="section-kicker">REQUEST AN ESTIMATE</div>
+          <h2>Have a project in mind?</h2>
+          <p>Send the basics and Imperial Crown can follow up directly. Prefer to call? Choose either line below.</p>
+          <div className="direct-lines">
+            {phones.map((p) => (
+              <a href={p.href} key={p.display}>
+                <span>{p.label}</span>
+                <strong>{p.display}</strong>
+                <i>↗</i>
+              </a>
+            ))}
+          </div>
+          <a className="instagram-link" href="https://www.instagram.com/imperial_clp/" target="_blank" rel="noreferrer">
+            <span className="ig-icon">◎</span> @imperial_clp <span>↗</span>
+          </a>
+        </div>
+
+        <form className="contact-form" onSubmit={submitForm}>
+          <div className="form-title">Project inquiry</div>
+          <div className="form-grid">
+            <label>
+              <span>First name</span>
+              <input name="firstName" required placeholder="First name" />
+            </label>
+            <label>
+              <span>Last name</span>
+              <input name="lastName" required placeholder="Last name" />
+            </label>
+          </div>
+          <label>
+            <span>Phone number</span>
+            <input name="phone" required inputMode="tel" placeholder="(951) 555-0123" />
+          </label>
+          <label>
+            <span>Service needed</span>
+            <select name="service" required defaultValue="">
+              <option value="" disabled>Select a service</option>
+              {services.map(s => <option key={s[0]} value={s[0]}>{s[0]}</option>)}
+              <option value="Other / Not sure">Other / Not sure</option>
+            </select>
+          </label>
+          <button className="btn btn-gold full" disabled={submitting}>
+            {submitting ? "Sending..." : "Send Estimate Request"}
+          </button>
+          <p className={`form-status ${status ? "show" : ""}`}>{status}</p>
+          <small>By submitting, you’re requesting contact regarding your project.</small>
+        </form>
+      </section>
+
+      <footer>
+        <div className="footer-brand">
+          <img src="/brand/imperial-crown-logo.png" alt="Imperial Crown" />
+          <p>Lath · Plastering · Stucco · Exterior Finishes</p>
+        </div>
+        <div className="footer-links">
+          <a href="#services">Services</a>
+          <a href="#work">Projects</a>
+          <a href="#contact">Estimate</a>
+          <a href="https://www.instagram.com/imperial_clp/" target="_blank" rel="noreferrer">Instagram</a>
+        </div>
+        <div className="footer-lines">
+          <a href="tel:+19518803103">(951) 880-3103</a>
+          <a href="tel:+19514250490">(951) 425-0490</a>
+        </div>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Imperial Crown Lath & Plastering</span>
+          <span>Built around the work.</span>
+        </div>
+      </footer>
+
+      {scrolled && (
+        <div className="mobile-cta">
+          <PhoneChooser compact />
+          <a className="btn btn-gold" href="#contact">Get Estimate</a>
+        </div>
+      )}
+    </main>
+  );
+}
