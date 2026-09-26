@@ -488,3 +488,17 @@ html{
     object-position:center center !important;
   }
 }
+
+
+/* v7 mobile hero crop — keep the completed house centered like desktop */
+@media (max-width: 640px){
+  .hero-media img{
+    object-fit:cover;
+    object-position:58% center !important;
+  }
+  .hero-overlay{
+    background:
+      linear-gradient(90deg,rgba(4,10,17,.82) 0%,rgba(4,10,17,.58) 55%,rgba(4,10,17,.30) 100%),
+      linear-gradient(0deg,var(--navy) 0%,transparent 24%);
+  }
+}
