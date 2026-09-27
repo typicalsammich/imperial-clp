@@ -927,3 +927,108 @@ html{
     object-position:center 24% !important;
   }
 }
+
+
+/* v13 — premium architectural reveal: clean vertical wipe, no pixel texture */
+.transformation-reveal .transformation-photo{
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  filter:none !important;
+  animation:none !important;
+  transition:none !important;
+}
+
+.transformation-reveal .transformation-before{
+  opacity:1 !important;
+  z-index:0;
+  transform:none !important;
+}
+
+.transformation-reveal .transformation-after{
+  opacity:1 !important;
+  z-index:1;
+  transform:none !important;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path .95s cubic-bezier(.77,0,.18,1) !important;
+}
+
+.transformation-reveal.show-after .transformation-before{
+  opacity:1 !important;
+}
+
+.transformation-reveal.show-after .transformation-after{
+  opacity:1 !important;
+  clip-path:inset(0 0 0 0);
+  animation:none !important;
+}
+
+/* slim gold reveal edge travels across the project */
+.transformation-stage .transformation-shade{
+  opacity:1 !important;
+  background:linear-gradient(180deg,rgba(4,10,17,.02) 0%,rgba(4,10,17,.02) 62%,rgba(4,10,17,.58) 100%) !important;
+}
+
+.transformation-stage .transformation-shade::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:1px;
+  background:linear-gradient(180deg,transparent 4%,rgba(224,196,143,.95) 25%,rgba(224,196,143,.95) 75%,transparent 96%);
+  box-shadow:0 0 18px rgba(224,196,143,.28);
+  opacity:0;
+  transform:translateX(0);
+  pointer-events:none;
+}
+
+.transformation-reveal.show-after .transformation-shade::after{
+  animation:architecturalSweep .95s cubic-bezier(.77,0,.18,1) both;
+}
+
+@keyframes architecturalSweep{
+  0%{left:0;opacity:0}
+  8%{opacity:1}
+  92%{opacity:1}
+  100%{left:100%;opacity:0}
+}
+
+/* Reverse transition: AFTER retracts cleanly to reveal BEFORE */
+.transformation-reveal:not(.show-after) .transformation-after{
+  clip-path:inset(0 100% 0 0);
+}
+
+/* remove the old pixel mask completely, including WebKit */
+.transformation-reveal.show-after .transformation-after,
+.transformation-reveal:not(.show-after) .transformation-before{
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  -webkit-mask-size:auto !important;
+  mask-size:auto !important;
+}
+
+/* Keep the project bright enough to actually inspect */
+.transformation-stage{
+  background:#07111d;
+}
+.transformation-photo{
+  filter:none !important;
+}
+
+@media(max-width:800px){
+  .transformation-reveal .transformation-after{
+    transition-duration:.8s !important;
+  }
+  .transformation-reveal.show-after .transformation-shade::after{
+    animation-duration:.8s;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .transformation-reveal .transformation-after{
+    transition:none !important;
+  }
+  .transformation-stage .transformation-shade::after{
+    animation:none !important;
+  }
+}
