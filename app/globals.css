@@ -909,3 +909,21 @@ html{
     -webkit-mask-image:none !important;
   }
 }
+
+
+/* v12 — reframe the featured transformation toward the house */
+.transformation-before{
+  object-position:center 34% !important;
+}
+.transformation-after{
+  object-position:center 28% !important;
+}
+
+@media(max-width:800px){
+  .transformation-before{
+    object-position:center 32% !important;
+  }
+  .transformation-after{
+    object-position:center 24% !important;
+  }
+}
