@@ -57,12 +57,12 @@ function TransformationReveal() {
         aria-label={after ? "Show before photo" : "Show after photo"}
       >
         <img
-          src="/projects/featured-before.jpeg"
+          src="/projects/featured-after.jpeg"
           alt="Imperial Crown project before transformation"
           className="transformation-photo transformation-before"
         />
         <img
-          src="/projects/featured-after.jpeg"
+          src="/projects/featured-before.jpeg"
           alt="Imperial Crown project after transformation"
           className="transformation-photo transformation-after"
         />
