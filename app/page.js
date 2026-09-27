@@ -16,14 +16,6 @@ const services = [
   ["Outdoor Living Surfaces", "Plaster and stucco finishes for outdoor kitchens, patio structures and custom masonry-adjacent spaces."]
 ];
 
-const comparisons = [
-  { before: "/projects/project-1.png", after: "/projects/project-2.png", ratio: "636 / 836", title: "Commercial Exterior Refresh", tag: "Before / After" },
-  { before: "/projects/project-4.png", after: "/projects/project-5.png", ratio: "645 / 849", title: "Residential Stucco Transformation", tag: "Before / After" },
-  { before: "/projects/project-6.png", after: "/projects/project-7.png", ratio: "853 / 643", title: "Exterior Finish Upgrade", tag: "Before / After" },
-  { before: "/projects/project-8.png", after: "/projects/project-9.png", ratio: "675 / 727", title: "Outdoor Kitchen Finish", tag: "Before / After" },
-  { before: "/projects/project-10.png", after: "/projects/project-11.png", ratio: "828 / 431", title: "Custom Home Exterior", tag: "Before / After" }
-];
-
 function PhoneChooser({ compact = false }) {
   const [open, setOpen] = useState(false);
 
@@ -52,33 +44,39 @@ function PhoneChooser({ compact = false }) {
   );
 }
 
-function Compare({ item }) {
-  const [value, setValue] = useState(50);
+function TransformationReveal() {
+  const [after, setAfter] = useState(false);
+
   return (
-    <article className="compare-card">
-      <div className="compare-shell" style={{ "--split": `${value}%`, aspectRatio: item.ratio }}>
-        <img src={item.after} alt={`${item.title} after`} className="compare-img" />
-        <div className="before-mask" style={{ width: `${value}%` }}>
-          <img src={item.before} alt={`${item.title} before`} className="compare-img compare-before" />
-        </div>
-        <div className="compare-line" style={{ left: `${value}%` }}>
-          <span>↔</span>
-        </div>
-        <span className="compare-badge left">BEFORE</span>
-        <span className="compare-badge right">AFTER</span>
-        <input
-          aria-label={`Before and after slider for ${item.title}`}
-          type="range"
-          min="0"
-          max="100"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className="compare-range"
+    <article className={`transformation-reveal ${after ? "show-after" : ""}`}>
+      <button
+        type="button"
+        className="transformation-stage"
+        onClick={() => setAfter(v => !v)}
+        aria-pressed={after}
+        aria-label={after ? "Show before photo" : "Show after photo"}
+      >
+        <img
+          src="/projects/featured-before.jpeg"
+          alt="Imperial Crown project before transformation"
+          className="transformation-photo transformation-before"
         />
-      </div>
-      <div className="compare-meta">
-        <span>{item.tag}</span>
-        <h3>{item.title}</h3>
+        <img
+          src="/projects/featured-after.jpeg"
+          alt="Imperial Crown project after transformation"
+          className="transformation-photo transformation-after"
+        />
+        <div className="transformation-shade" />
+        <div className="transformation-status">
+          <span className="status-kicker">{after ? "AFTER" : "BEFORE"}</span>
+          <strong>{after ? "Finished transformation" : "Tap to reveal transformation"}</strong>
+          <small>{after ? "Tap to view before" : "See the completed exterior"}</small>
+        </div>
+      </button>
+      <div className="transformation-caption">
+        <span>FEATURED TRANSFORMATION</span>
+        <h3>Exterior finish transformation</h3>
+        <p>Tap the project to move between the original condition and the finished Imperial Crown result.</p>
       </div>
     </article>
   );
@@ -113,24 +111,6 @@ export default function Home() {
       document.removeEventListener("pointerover", over);
     };
   }, []);
-
-  function moveCarousel(direction) {
-    const carousel = document.getElementById("compareCarousel");
-    if (!carousel) return;
-    const cards = Array.from(carousel.querySelectorAll(".compare-card"));
-    if (!cards.length) return;
-
-    const current = cards.reduce((best, card, index) => {
-      const distance = Math.abs(card.offsetLeft - carousel.scrollLeft);
-      return distance < best.distance ? { index, distance } : best;
-    }, { index: 0, distance: Infinity }).index;
-
-    let target = current + direction;
-    if (target >= cards.length) target = 0;
-    if (target < 0) target = cards.length - 1;
-
-    carousel.scrollTo({ left: cards[target].offsetLeft, behavior: "smooth" });
-  }
 
   async function submitForm(e) {
     e.preventDefault();
@@ -266,20 +246,7 @@ export default function Home() {
           <p>Selected Imperial Crown work shown with the original project photography you provided.</p>
         </div>
 
-        <div className="compare-carousel-wrap">
-          <button className="carousel-btn prev" type="button" aria-label="Previous transformation"
-            onClick={() => moveCarousel(-1)}>
-            ‹
-          </button>
-          <div className="compare-carousel" id="compareCarousel">
-            {comparisons.map((item) => <Compare item={item} key={item.title} />)}
-          </div>
-          <button className="carousel-btn next" type="button" aria-label="Next transformation"
-            onClick={() => moveCarousel(1)}>
-            ›
-          </button>
-          <div className="carousel-hint">Scroll or swipe to explore transformations</div>
-        </div>
+        <TransformationReveal />
       </section>
 
       <section className="feature-project">

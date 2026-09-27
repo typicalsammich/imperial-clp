@@ -585,3 +585,222 @@ html{
     transition:none !important;
   }
 }
+
+
+/* v10 — replace sliders with a single tap-to-transform project */
+.compare-carousel-wrap,
+.compare-carousel,
+.compare-grid{
+  display:none !important;
+}
+
+.transformation-reveal{
+  max-width:1180px;
+  margin:0 auto;
+}
+
+.transformation-stage{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  border:0;
+  padding:0;
+  display:block;
+  background:#07111d;
+  border-radius:4px;
+  isolation:isolate;
+  text-align:left;
+}
+
+.transformation-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:
+    opacity .8s cubic-bezier(.22,.61,.36,1),
+    transform 1s cubic-bezier(.22,.61,.36,1),
+    filter .8s ease;
+  will-change:opacity,transform;
+}
+
+.transformation-before{
+  opacity:1;
+  transform:scale(1);
+  filter:saturate(.92) contrast(.98);
+}
+
+.transformation-after{
+  opacity:0;
+  transform:scale(1.035);
+  filter:saturate(.9) brightness(.9);
+}
+
+.transformation-reveal.show-after .transformation-before{
+  opacity:0;
+  transform:scale(.985);
+  filter:saturate(.82) brightness(.92);
+}
+
+.transformation-reveal.show-after .transformation-after{
+  opacity:1;
+  transform:scale(1);
+  filter:saturate(1) brightness(1);
+}
+
+.transformation-shade{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,10,17,.04),rgba(4,10,17,.05) 55%,rgba(4,10,17,.64) 100%);
+  transition:opacity .45s ease;
+}
+
+.transformation-reveal.show-after .transformation-shade{
+  opacity:.7;
+}
+
+.transformation-status{
+  position:absolute;
+  z-index:3;
+  left:28px;
+  bottom:26px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  text-align:left;
+  color:#fff;
+  pointer-events:none;
+}
+
+.transformation-status .status-kicker{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 10px;
+  margin-bottom:12px;
+  background:rgba(7,17,29,.84);
+  border:1px solid rgba(224,196,143,.28);
+  color:var(--gold-2);
+  font-size:10px;
+  letter-spacing:.16em;
+  font-weight:800;
+}
+
+.transformation-status strong{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(28px,4vw,52px);
+  font-weight:400;
+  line-height:1.05;
+}
+
+.transformation-status small{
+  margin-top:8px;
+  color:#d7dde3;
+  font-size:13px;
+  letter-spacing:.03em;
+}
+
+.transformation-stage::after{
+  content:"";
+  position:absolute;
+  z-index:4;
+  top:24px;
+  right:24px;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:1px solid rgba(224,196,143,.55);
+  background:rgba(7,17,29,.68);
+}
+
+.transformation-stage::before{
+  content:"";
+  position:absolute;
+  z-index:5;
+  top:51px;
+  right:43px;
+  width:16px;
+  height:1px;
+  background:var(--gold-2);
+  box-shadow:0 -6px 0 rgba(224,196,143,.9),0 6px 0 rgba(224,196,143,.9);
+  transform:translateY(-50%);
+}
+
+.transformation-caption{
+  display:grid;
+  grid-template-columns:200px 1fr 1.2fr;
+  gap:30px;
+  align-items:start;
+  padding:22px 0 0;
+}
+
+.transformation-caption span{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.16em;
+}
+
+.transformation-caption h3{
+  margin:0;
+  font-size:22px;
+}
+
+.transformation-caption p{
+  margin:0;
+  color:#9eabb6;
+  line-height:1.7;
+  font-size:14px;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .transformation-stage:hover .transformation-photo{
+    transform:scale(1.012);
+  }
+  .transformation-reveal.show-after .transformation-stage:hover .transformation-after{
+    transform:scale(1.012);
+  }
+}
+
+@media(max-width:800px){
+  .transformation-stage{
+    aspect-ratio:4/5;
+  }
+  .transformation-before{
+    object-position:center 52%;
+  }
+  .transformation-after{
+    object-position:center 48%;
+  }
+  .transformation-status{
+    left:18px;
+    right:18px;
+    bottom:18px;
+  }
+  .transformation-stage::after{
+    top:16px;
+    right:16px;
+    width:48px;
+    height:48px;
+  }
+  .transformation-stage::before{
+    top:40px;
+    right:32px;
+  }
+  .transformation-caption{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding-top:16px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .transformation-photo{
+    transition:opacity .01ms !important;
+    transform:none !important;
+  }
+}
