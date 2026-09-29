@@ -177,11 +177,11 @@ export default function Home() {
         <div className="hero-content">
           <div className="eyebrow reveal">20 YEARS OF CRAFTSMANSHIP</div>
           <h1 className="reveal reveal-delay">
-            Built with precision.<br />
+            Southern California stucco & plaster.<br />
             <span>Finished like a statement.</span>
           </h1>
           <p className="hero-copy reveal reveal-delay-2">
-            Premium lath, plaster and stucco craftsmanship for homeowners, builders and property owners who care about how the finished work looks.
+            Stucco, plaster and lath craftsmanship for Southern California homeowners, builders and property owners — from repairs and re-stucco to complete exterior finishes.
           </p>
           <div className="hero-actions reveal reveal-delay-3">
             <a className="btn btn-gold" href="#contact">Request an Estimate</a>
@@ -206,7 +206,7 @@ export default function Home() {
       <section className="section intro" id="about">
         <div className="section-kicker">IMPERIAL CROWN</div>
         <div className="intro-grid">
-          <h2>Craftsmanship that makes the finished surface feel intentional.</h2>
+          <h2>Stucco and plaster craftsmanship built to finish clean.</h2>
           <div className="intro-copy">
             <p>
               Imperial Crown brings two decades of hands-on experience to lath, plaster, stucco and exterior finish work. The goal is simple: strong prep, clean execution and a finished result that elevates the property.
@@ -220,7 +220,7 @@ export default function Home() {
         <div className="section-head">
           <div>
             <div className="section-kicker">WHAT WE DO</div>
-            <h2>Specialized exterior craftsmanship.</h2>
+            <h2>Stucco, plaster and lath services.</h2>
           </div>
           <p>From repairs to full exterior transformations, every project is approached with finish quality in mind.</p>
         </div>

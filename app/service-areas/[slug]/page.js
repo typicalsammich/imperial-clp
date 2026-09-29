@@ -12,8 +12,10 @@ export function generateMetadata({ params }) {
   const area = areas[params.slug];
   if (!area) return {};
   return {
-    title: `Lath, Plaster & Stucco in ${area.name} | Imperial Crown`,
-    description: `${area.intro} Backed by 20+ years of experience. Request an estimate from Imperial Crown Lath & Plastering.`
+    title: `Stucco & Plaster Contractor in ${area.name}`,
+    description: `Looking for stucco, plaster, lath, re-stucco or repair services in ${area.name}? Imperial Crown brings 20+ years of exterior craftsmanship to Southern California projects.`,
+    alternates: { canonical: `/service-areas/${params.slug}` },
+    openGraph: { title: `Stucco & Plaster Contractor in ${area.name} | Imperial Crown`, description: area.intro }
   };
 }
 
@@ -31,7 +33,7 @@ export default function ServiceAreaPage({ params }) {
 
       <section className="area-hero">
         <div className="section-kicker">IMPERIAL CROWN · {area.name.toUpperCase()}</div>
-        <h1>Lath, plaster and stucco services in {area.name}.</h1>
+        <h1>Stucco, plaster and lath contractor serving {area.name}.</h1>
         <p>{area.intro} Every project is approached with an emphasis on preparation, durable execution and a clean finished appearance.</p>
         <div className="area-actions">
           <a href="tel:+19518803103" className="btn btn-gold">Call Diego: (951) 880-3103</a>
