@@ -1,6 +1,6 @@
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://imperial-clp.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.socalplastering.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
