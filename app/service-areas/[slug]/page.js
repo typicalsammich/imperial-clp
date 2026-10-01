@@ -34,7 +34,7 @@ export default function ServiceAreaPage({ params }) {
       <section className="area-hero">
         <div className="section-kicker">IMPERIAL CROWN · {area.name.toUpperCase()}</div>
         <h1>Stucco, plaster and lath contractor serving {area.name}.</h1>
-          <div className="license-inline area-license">CSLB License #1161215</div>
+          <div className="license-inline area-license">Licensed California Contractor · License #1161215</div>
         <p>{area.intro} Every project is approached with an emphasis on preparation, durable execution and a clean finished appearance.</p>
         <div className="area-actions">
           <a href="tel:+19518803103" className="btn btn-gold">Call Diego: (951) 880-3103</a>

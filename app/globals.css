@@ -1039,3 +1039,54 @@ html{
 .footer-license{margin-top:14px;color:#aeb7bf;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .area-license{margin-top:16px}
 @media(max-width:800px){.site-license-top{top:82px;left:18px;font-size:9px}.license-inline{font-size:10px}}
+
+
+/* v19 — natural license presentation */
+.site-license-top{display:none !important;}
+
+.license-inline{
+  display:inline-flex !important;
+  align-items:center;
+  width:auto !important;
+  margin:8px 0 18px !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  color:var(--gold-2) !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase;
+}
+
+.license-inline::before{
+  content:"";
+  width:18px;
+  height:1px;
+  margin-right:9px;
+  background:var(--gold-2);
+  opacity:.7;
+}
+
+.footer-license{
+  margin-top:10px !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  color:#aeb7bf !important;
+  font-size:11px !important;
+  letter-spacing:.07em !important;
+  text-transform:none !important;
+}
+
+.area-license{
+  margin-top:12px !important;
+  margin-bottom:8px !important;
+}
+
+@media(max-width:800px){
+  .license-inline{
+    font-size:10px !important;
+    letter-spacing:.06em !important;
+  }
+}
