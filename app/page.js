@@ -138,6 +138,7 @@ export default function Home() {
 
   return (
     <main>
+      <div className="site-license-top">CSLB License #1161215</div>
       <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
         <a className="brand" href="#top" aria-label="Imperial Crown home">
           <img src="/brand/imperial-crown-logo.png" alt="Imperial Crown Lath and Plastering" />
@@ -306,6 +307,7 @@ export default function Home() {
       </section>
 
       <section className="contact-section" id="contact">
+        <div className="license-inline">California Contractor License #1161215</div>
         <div className="contact-copy">
           <div className="section-kicker">REQUEST AN ESTIMATE</div>
           <h2>Have a project in mind?</h2>
@@ -381,6 +383,8 @@ export default function Home() {
           <span>© {new Date().getFullYear()} Imperial Crown Lath & Plastering</span>
           <span>Built around the work.</span>
         </div>
+      
+        <div className="footer-license">CSLB License #1161215</div>
       </footer>
 
       {scrolled && (
