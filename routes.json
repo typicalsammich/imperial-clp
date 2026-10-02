@@ -1,0 +1,233 @@
+{
+  "results": [
+    {
+      "route": "/",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/our-work",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/about",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/contact",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/privacy",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/stucco",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/stucco-repair",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/lath",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/plastering",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/exterior-finishes",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/services/additions-remodels",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/los-angeles-county",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/san-diego-county",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/inland-empire",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/los-angeles",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/pasadena",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/long-beach",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/san-diego",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/carlsbad",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/escondido",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/riverside",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/temecula",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/rancho-cucamonga",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/riverside-county",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/san-bernardino-county",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    },
+    {
+      "route": "/service-areas/orange-county",
+      "status": 200,
+      "h1": 1,
+      "canonical": true,
+      "description": true,
+      "structuredData": true
+    }
+  ],
+  "verification": 200,
+  "robots": 200,
+  "invalidForm": 400,
+  "unconfiguredDelivery": 503,
+  "invalid": []
+}
