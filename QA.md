@@ -20,11 +20,21 @@ Reduced-motion selection was tested programmatically; OS/browser preference swit
 
 | Profile | Performance | Accessibility | Best practices | SEO | LCP | TBT | CLS |
 | --- | ---: | ---: | ---: | ---: | --- | --- | ---: |
-| Desktop1440x900 |100|100|100|100|0.6s|0ms|0|
-| Mobile simulated slow connection |91|100|100|100|3.5s|40ms|0|
+| Desktop1440x900 |100|100|100|100|0.7s|0ms|0|
+| Mobile simulated slow connection |97|100|100|100|2.6s|40ms|0|
 
 Reports and screenshots are in output/qa. These are actual local production audits, not guarantees of deployed network performance. Desktop uses a40ms/10Mbps connection and1x CPU. Mobile uses Lighthouse's standard simulation. The remaining mobile cost comes from the framework and cinematic payload. Native desktop source resolution is1672x941, not4K.
 
 ## Launch conditions
 
 Add private RESEND_API_KEY and verified FROM_EMAIL, configure CONTACT_EMAIL=Imperialcrowniceja@gmail.com, confirm receipt after deployment, set Vercel endpoint abuse controls, and have the business approve final service availability/content. Generated cinema is illustrative; real project gallery photographs come from the source business website/project. No fabricated reviews included.
+
+## Requested revision checks
+
+Homepage reload at scroll progress .40 reset scroll top and progress to zero. Navigation away and browser Back likewise returned to the opening. Mobile reload returned to the opening; the 32-second movie autoplays all seven desktop shots and eight chapter texts. Playback completed on its final branding frame, replay worked, and ordinary page scrolling at375px left playback running (time14s) with sticky CTA visible. Width390px showed preparation and finished reveal without overflow.
+
+The gallery starts with yellow stucco labelled Before. Clicking After selects the neutral stucco image. New versioned favicon URLs are in rendered metadata and both icon assets return200. The ICO includes16/32/48/64 sizes.
+
+Map uses real OpenStreetMap street tiles and separate blue/gold/charcoal geographic regions. Tiles loaded successfully. Clicking the shaded San Diego polygon selected the corresponding city links and zoomed desktop from7.25 to9. Mobile region controls and reset worked without horizontal overflow. Basemap attribution remains visible. The map is imported only near the viewport.
+
+All three desktop region targets verified: overview zoom7.25, Los Angeles8, San Diego9, Inland Empire8.75. Inland Empire centers on Riverside/Temecula/Rancho Cucamonga communities rather than the distant desert county extent.

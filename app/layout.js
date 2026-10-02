@@ -1,7 +1,9 @@
+import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import {Header,Footer,SiteEffects} from './components/SiteChrome';
 import {siteUrl} from './data';
-export const metadata={metadataBase:new URL(siteUrl),title:{default:'Imperial Crown Lath & Plastering',template:'%s | Imperial Crown Lath & Plastering'},description:'20+ years of Southern California stucco, plaster and lath experience. CA License #1161215.',openGraph:{type:'website',siteName:'Imperial Crown Lath & Plastering'},icons:{icon:'/icon.png'},robots:{index:true,follow:true}};
+export const metadata={metadataBase:new URL(siteUrl),title:{default:'Imperial Crown Lath & Plastering',template:'%s | Imperial Crown Lath & Plastering'},description:'20+ years of Southern California stucco, plaster and lath experience. CA License #1161215.',openGraph:{type:'website',siteName:'Imperial Crown Lath & Plastering'},icons:{icon:[{url:'/brand/crown-favicon-v2.png',type:'image/png',sizes:'64x64'},{url:'/brand/crown-favicon-v2.ico',sizes:'any'}],shortcut:'/brand/crown-favicon-v2.ico',apple:'/brand/crown-touch-icon-v2.png'},robots:{index:true,follow:true}};
 const schema={'@context':'https://schema.org','@type':'HomeAndConstructionBusiness','@id':`${siteUrl}/#business`,name:'Imperial Crown Lath & Plastering',url:siteUrl,logo:`${siteUrl}/brand/logo-hd.png`,image:`${siteUrl}/projects/project-11.webp`,telephone:'+1-951-880-3103',sameAs:['https://www.instagram.com/imperial_clp/'],areaServed:['Los Angeles County','San Diego County','Inland Empire'].map(name=>({'@type':'AdministrativeArea',name})),identifier:{'@type':'PropertyValue',propertyID:'California Contractor License',value:'1161215'}};
 export default function RootLayout({children}){return <html lang="en"><body><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/><Header/>{children}<Footer/><SiteEffects/></body></html>;}
+
 

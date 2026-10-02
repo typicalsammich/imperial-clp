@@ -2,23 +2,13 @@
 import {useEffect,useRef,useState} from 'react';
 import {cinematicAssets,chapters} from './assets';
 import {loadFrame} from './MediaPreloader';
-const clamp=x=>Math.max(0,Math.min(1,x));
-const smooth=x=>x*x*(3-2*x);
-function frameState(p){
- // The camera move and material transition share the same timeline in both directions.
- if(p<.20)return [0,0,0]; if(p<.34)return [0,1,smooth((p-.20)/.14)];
- if(p<.42)return [1,1,0];if(p<.50)return [1,2,smooth((p-.42)/.08)];
- if(p<.56)return [2,2,0];if(p<.61)return [2,3,smooth((p-.56)/.05)];
- if(p<.66)return [3,4,smooth((p-.61)/.05)];if(p<.70)return [4,4,0];
- if(p<.78)return [4,5,smooth((p-.70)/.08)];if(p<.86)return [5,5,0];
- if(p<.93)return [5,6,smooth((p-.86)/.07)];return [6,6,0];
-}
+import {clamp,frameState,cameraZoom} from './timeline.mjs';
 export default function DesktopScrollExperience({quality,onFailure}){
  const section=useRef(null),canvas=useRef(null),copy=useRef(null),progress=useRef(null);const [ready,setReady]=useState(false),[loaded,setLoaded]=useState(0),[chapter,setChapter]=useState(0);
  useEffect(()=>{
   const abort=new AbortController();let disposed=false;let frames=[],raf=0,target=0,current=0,lastTime=0,lastChapter=-1,visible=true,width=0,height=0;const el=section.current,ctx=canvas.current.getContext('2d',{alpha:false});if(!ctx){onFailure();return;}
   const measure=()=>{width=el.clientWidth;height=innerHeight;const dpr=Math.min(devicePixelRatio,2);canvas.current.width=Math.round(width*dpr);canvas.current.height=Math.round(height*dpr);canvas.current.style.width=width+'px';canvas.current.style.height=height+'px';update();};
-  const paint=(p)=>{if(!frames[0])return;const [a,b,mix]=frameState(p);const zoom=p<.58?1+.24*smooth(p/.58):p<.86?1.24:1.24-.24*smooth((p-.86)/.14);const draw=(img,alpha)=>{if(!img)return;const cw=canvas.current.width,ch=canvas.current.height;const scale=Math.max(cw/img.width,ch/img.height)*zoom;ctx.globalAlpha=alpha;ctx.drawImage(img,(cw-img.width*scale)/2,(ch-img.height*scale)/2,img.width*scale,img.height*scale);};ctx.globalAlpha=1;ctx.fillStyle='#101a23';ctx.fillRect(0,0,canvas.current.width,canvas.current.height);draw(frames[a]||frames[0],1);if(a!==b&&frames[b])draw(frames[b],mix);ctx.globalAlpha=1;el.dataset.progress=p.toFixed(4);progress.current.style.transform=`scaleX(${p})`;const i=chapters.reduce((prev,c,index)=>p>=c.at?index:prev,0);if(i!==lastChapter){lastChapter=i;setChapter(i);}const fade=i===7?clamp((p-.93)/.035):i===0?clamp((p-.015)/.025):1;copy.current.style.opacity=fade;};
+  const paint=(p)=>{if(!frames[0])return;const [a,b,mix]=frameState(p);const zoom=cameraZoom(p);const draw=(img,alpha)=>{if(!img)return;const cw=canvas.current.width,ch=canvas.current.height;const scale=Math.max(cw/img.width,ch/img.height)*zoom;ctx.globalAlpha=alpha;ctx.drawImage(img,(cw-img.width*scale)/2,(ch-img.height*scale)/2,img.width*scale,img.height*scale);};ctx.globalAlpha=1;ctx.fillStyle='#101a23';ctx.fillRect(0,0,canvas.current.width,canvas.current.height);draw(frames[a]||frames[0],1);if(a!==b&&frames[b])draw(frames[b],mix);ctx.globalAlpha=1;el.dataset.progress=p.toFixed(4);progress.current.style.transform=`scaleX(${p})`;const i=chapters.reduce((prev,c,index)=>p>=c.at?index:prev,0);if(i!==lastChapter){lastChapter=i;setChapter(i);}const fade=i===7?clamp((p-.93)/.035):i===0?clamp((p-.015)/.025):1;copy.current.style.opacity=fade;};
   const tick=time=>{raf=0;if(disposed||!visible)return;const dt=Math.min(32,time-(lastTime||time));lastTime=time;const diff=target-current;current+=diff*(1-Math.exp(-dt/75));if(Math.abs(diff)<.00015)current=target;paint(current);if(current!==target)raf=requestAnimationFrame(tick);else lastTime=0;};
   function update(){target=clamp(-el.getBoundingClientRect().top/(el.offsetHeight-innerHeight));if(!raf&&visible)raf=requestAnimationFrame(tick);}
   const observation=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)update();else{cancelAnimationFrame(raf);raf=0;}},{rootMargin:'100px'});observation.observe(el);measure();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',measure);
@@ -27,5 +17,6 @@ export default function DesktopScrollExperience({quality,onFailure}){
  },[quality,onFailure]);
  const scene=chapters[chapter];return <section ref={section} id="cinematic" className="cinematic desktop-cinematic" aria-label="Scroll through an illustrated exterior transformation"><h1 className="sr-only">Imperial Crown Lath &amp; Plastering · Southern California</h1><div className="cinematic-pin"><img className="cinematic-poster" src={cinematicAssets.opening} alt="Southern California home before its exterior transformation" width="960" height="540" fetchPriority="high"/><canvas ref={canvas} className={ready?'ready':''} aria-hidden="true"/><div className="cinematic-shade"/><div className={`cinematic-loading ${ready?'complete':''}`} aria-hidden="true"><span>IMPERIAL CROWN</span><i style={{transform:`scaleX(${Math.max(.12,loaded/cinematicAssets.frameNames.length)})`}}/></div><div className={`cinematic-copy scene-${chapter} ${chapter===7?'final-copy':''}`} ref={copy}><p className="eyebrow">{chapter===7?'Lath & Plastering':`0${chapter+1} / ${scene.label}`}</p>{chapter===7?<h2 className="final-title">IMPERIAL<br/>CROWN</h2>:<h2>{scene.line}</h2>}<p>{scene.sub}</p>{chapter===7&&<><div className="hero-actions"><a href="/contact" className="button">Request an estimate</a><a href="/our-work" className="button button-outline">View our work</a></div><small>CA License #1161215</small></>}</div><div className="cinematic-bottom"><span>{chapter===7?'Continue to the work':'Scroll to reveal the craft'}</span><a href="#craft">Skip cinematic</a><small>Southern California</small></div><div className="cinematic-track"><i ref={progress}/></div></div></section>;
 }
+
 
 

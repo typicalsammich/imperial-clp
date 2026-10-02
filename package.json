@@ -10,9 +10,12 @@
     "test:capabilities": "node scripts/verify-capabilities.cjs",
     "test:routes": "node scripts/verify-routes.cjs",
     "test:media": "node scripts/verify-media.cjs",
-    "audit:lighthouse": "node scripts/lighthouse.cjs"
+    "audit:lighthouse": "node scripts/lighthouse.cjs",
+    "media:mobile": "node scripts/render-mobile-story.cjs",
+    "test:revisions": "node scripts/verify-revisions.cjs"
   },
   "dependencies": {
+    "leaflet": "^1.9.4",
     "next": "^15.5.24",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"

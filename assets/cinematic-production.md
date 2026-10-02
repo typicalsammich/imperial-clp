@@ -11,3 +11,6 @@ mobile-final.png intentionally recomposes the same property in portrait. mobile-
 logo-restored.png edits the supplied original: preserve angular silver/navy crown, exact IMPERIAL CROWN / LATH & PLASTERING wording and true alpha transparency. Original logo retained.
 
 Visual inspection reviewed continuity, tool geometry and tactile texture. A discarded crown variation and redundant 4K-requested image are not integrated. Actual landscape output:1672x941; portrait:941x1672. This is an illustrative keyframe commercial, not native 4K footage or claimed client-project documentation. Real projects are separate.
+
+Revision: Mobile now uses all seven identical desktop master shots rather than the earlier two-image portrait treatment. scripts/render-mobile-story.cjs imports frameState/cameraZoom from the same timeline.mjs as DesktopScrollExperience. Portrait framing follows per-shot camera targets rather than a blind center crop. The seven shots and eight text chapters have the same normalized timing on both devices.
+

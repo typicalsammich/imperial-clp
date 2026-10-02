@@ -1,10 +1,12 @@
+import {frameNames} from './timeline.mjs';
 // Replace the source frames here without changing the playback engine.
 export const cinematicAssets={
  opening:'/cinematic/opening-960.webp',
  poster:'/cinematic/final-960.webp',
- mobilePoster:'/cinematic/mobile-poster.avif',
- mobileVideo:'/cinematic/mobile.mp4',
- frameNames:['opening','preparation','craftsman','application','wet-detail','finished-detail','final'],
+ mobilePoster:'/cinematic/mobile-opening-v2.avif',
+ mobileStaticPoster:'/cinematic/mobile-poster.avif',
+ mobileVideo:'/cinematic/mobile-story-v2.mp4',
+ frameNames,
  sizes:{high:1672,medium:1280,low:960},
 };
 export const chapters=[
@@ -17,5 +19,7 @@ export const chapters=[
  {at:.83,label:'The details',line:'Detail is the difference.',sub:'Clean edges. Consistent texture.'},
  {at:.93,label:'The reveal',line:'Imperial Crown',sub:'Built beneath the surface. Finished to be seen.'},
 ];
+
+
 
 
