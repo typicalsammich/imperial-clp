@@ -21,7 +21,7 @@ Reduced-motion selection was tested programmatically; OS/browser preference swit
 | Profile | Performance | Accessibility | Best practices | SEO | LCP | TBT | CLS |
 | --- | ---: | ---: | ---: | ---: | --- | --- | ---: |
 | Desktop1440x900 |100|100|100|100|0.7s|0ms|0|
-| Mobile simulated slow connection |97|100|100|100|2.6s|40ms|0|
+| Mobile simulated slow connection |94|100|100|100|3.0s|50ms|0|
 
 Reports and screenshots are in output/qa. These are actual local production audits, not guarantees of deployed network performance. Desktop uses a40ms/10Mbps connection and1x CPU. Mobile uses Lighthouse's standard simulation. The remaining mobile cost comes from the framework and cinematic payload. Native desktop source resolution is1672x941, not4K.
 
@@ -29,12 +29,12 @@ Reports and screenshots are in output/qa. These are actual local production audi
 
 Add private RESEND_API_KEY and verified FROM_EMAIL, configure CONTACT_EMAIL=Imperialcrowniceja@gmail.com, confirm receipt after deployment, set Vercel endpoint abuse controls, and have the business approve final service availability/content. Generated cinema is illustrative; real project gallery photographs come from the source business website/project. No fabricated reviews included.
 
-## Requested revision checks
+## Version 3 revision checks
 
-Homepage reload at scroll progress .40 reset scroll top and progress to zero. Navigation away and browser Back likewise returned to the opening. Mobile reload returned to the opening; the 32-second movie autoplays all seven desktop shots and eight chapter texts. Playback completed on its final branding frame, replay worked, and ordinary page scrolling at375px left playback running (time14s) with sticky CTA visible. Width390px showed preparation and finished reveal without overflow.
+Desktop forward scrolling reached .40; reverse scrolling returned .20; warm reload reset to .00 with all seven frames ready. Mobile starts autoplay immediately after initialization without the former page-load delay. Repeated mobile reload starts playback again. The portrait film is 30 seconds at 60 fps, 2.76 MB, with fractional camera movement and shared transition focal points. Constrained connections use a 30 fps encode. Browser viewport checks covered 375, 390, 430, 768, 1024, 1366, 1440 and 1920 pixels; no horizontal overflow. Settled 1024px fine-pointer landscape correctly switches to desktop canvas. Physical mobile Safari and hardware trackpad feel are not certified by emulation.
 
-The gallery starts with yellow stucco labelled Before. Clicking After selects the neutral stucco image. New versioned favicon URLs are in rendered metadata and both icon assets return200. The ICO includes16/32/48/64 sizes.
+White hillside image is Before; yellow is After. Each photo gets its own unpadded frame with preserved aspect ratio. The hero, photo controls, aerial tiles and San Diego zoom were visually inspected; screenshots are saved in output/qa. Esri aerial tiles loaded at zoom 9, with county shading and provider attribution. Streets toggle works.
 
-Map uses real OpenStreetMap street tiles and separate blue/gold/charcoal geographic regions. Tiles loaded successfully. Clicking the shaded San Diego polygon selected the corresponding city links and zoomed desktop from7.25 to9. Mobile region controls and reset worked without horizontal overflow. Basemap attribution remains visible. The map is imported only near the viewport.
+Loader checks exercise HTTP 404, abort, ImageBitmap decoder failure followed by native decode, and a transient 503 followed by a successful retry. Capabilities cover reduced motion and smaller cinematic delivery for data saver / low memory. All 28 content routes, schema, canonical metadata, sitemap, robots and preserved Google verification pass. The form honestly returns 503 until email credentials are configured.
 
-All three desktop region targets verified: overview zoom7.25, Los Angeles8, San Diego9, Inland Empire8.75. Inland Empire centers on Riverside/Temecula/Rancho Cucamonga communities rather than the distant desert county extent.
+PNG/ICO crown assets are provided through Next app routes and fresh v3 metadata URLs. The separate user Chrome profile and its cache/extensions are unavailable to this automation, so the production-only symptom is hardened against but not independently reproduced in that profile. Public production requires deployment of this package.

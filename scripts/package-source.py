@@ -2,7 +2,7 @@ from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
 root = Path(__file__).resolve().parent.parent
-destination = root.parent / 'Imperial-Crown-Cinematic-Website-v2.zip'
+destination = root.parent / 'Imperial-Crown-Cinematic-Website-v3.zip'
 with ZipFile(destination, 'w', compression=ZIP_DEFLATED, compresslevel=6) as archive:
     for path in sorted(root.rglob('*')):
         relative = path.relative_to(root)

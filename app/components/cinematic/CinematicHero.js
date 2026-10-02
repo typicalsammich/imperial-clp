@@ -20,6 +20,6 @@ export default function CinematicHero(){
  },[]);
  if(!capability)return <div className="hero-initial"><ReducedMotionHero opening/><noscript><style>{'.hero-initial .static-copy{opacity:1!important}.hero-initial{height:auto!important}'}</style></noscript></div>;
  if(failed||capability.mode==='static')return <ReducedMotionHero/>;
- return capability.mode==='desktop'?<DesktopScrollExperience key={visit} quality={capability.quality} onFailure={failure}/>:<MobileCinematicExperience key={visit}/>;
+ return capability.mode==='desktop'?<DesktopScrollExperience key={visit} quality={capability.quality} onFailure={failure}/>:<MobileCinematicExperience key={visit} constrained={capability.constrained}/>;
 }
 

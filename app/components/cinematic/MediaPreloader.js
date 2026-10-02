@@ -1,6 +1,2 @@
-export async function loadFrame(url,signal){
- const response=await fetch(url,{signal,cache:'force-cache'});if(!response.ok)throw Error('Frame could not load');
- const blob=await response.blob();if(signal.aborted)throw Error('Aborted');
- if('createImageBitmap' in window)return createImageBitmap(blob);
- return new Promise((resolve,reject)=>{const img=new Image();const objectUrl=URL.createObjectURL(blob);img.onload=()=>{URL.revokeObjectURL(objectUrl);resolve(img);};img.onerror=()=>{URL.revokeObjectURL(objectUrl);reject(Error('Frame decode failed'));};img.src=objectUrl;});
-}
+function nativeDecode(blob,signal){return new Promise((resolve,reject)=>{const img=new Image(),url=URL.createObjectURL(blob);const done=(error)=>{signal.removeEventListener('abort',aborted);img.onload=img.onerror=null;URL.revokeObjectURL(url);error?reject(error):resolve(img);};const aborted=()=>done(new DOMException('Aborted','AbortError'));img.onload=()=>done();img.onerror=()=>done(Error('Frame decode failed'));signal.addEventListener('abort',aborted,{once:true});if(signal.aborted){aborted();return;}img.src=url;});}
+export async function loadFrame(url,signal){let error;for(let attempt=0;attempt<2;attempt++){try{const response=await fetch(url+(attempt?(url.includes('?')?'&':'?')+'fresh=3':''),{signal,cache:attempt?'reload':'default'});if(!response.ok)throw Error('Frame could not load');const blob=await response.blob();if(signal.aborted)throw new DOMException('Aborted','AbortError');if(typeof createImageBitmap==='function'){try{return await createImageBitmap(blob);}catch{if(signal.aborted)throw new DOMException('Aborted','AbortError');}}return await nativeDecode(blob,signal);}catch(e){if(signal.aborted)throw e;error=e;}}throw error;}

@@ -1,11 +1,13 @@
 import {frameNames} from './timeline.mjs';
 // Replace the source frames here without changing the playback engine.
 export const cinematicAssets={
- opening:'/cinematic/opening-960.webp',
- poster:'/cinematic/final-960.webp',
- mobilePoster:'/cinematic/mobile-opening-v2.avif',
- mobileStaticPoster:'/cinematic/mobile-poster.avif',
- mobileVideo:'/cinematic/mobile-story-v2.mp4',
+ opening:'/cinematic/v3/opening-960.webp',
+ poster:'/cinematic/v3/final-960.webp',
+ mobilePoster:'/cinematic/v3/mobile-opening-v3.avif',
+ mobileStaticPoster:'/cinematic/v3/mobile-poster.avif',
+ mobileVideo:'/cinematic/v3/mobile-story-v3.mp4',
+ base:'/cinematic/v3',
+ mobileLowVideo:'/cinematic/v3/mobile-story-low-v3.mp4',
  frameNames,
  sizes:{high:1672,medium:1280,low:960},
 };

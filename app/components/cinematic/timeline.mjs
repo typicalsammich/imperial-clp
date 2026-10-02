@@ -1,5 +1,5 @@
 export const frameNames=['opening','preparation','craftsman','application','wet-detail','finished-detail','final'];
-export const mobileDuration=32;
+export const mobileDuration=30;
 export const clamp=x=>Math.max(0,Math.min(1,x));
 export const smooth=x=>x*x*(3-2*x);
 export function frameState(p){

@@ -8,7 +8,7 @@ const groups=[
 ];
 function coordinates(d){return d.split('M').filter(Boolean).map(ring=>{const numbers=ring.match(/-?\d+(?:\.\d+)?/g).map(Number),points=[];for(let i=0;i<numbers.length;i+=2)points.push([35.85-numbers[i+1]/111,numbers[i]/88-119.05]);return points;});}
 export default function GeographicMap({selected,onSelect}){
- const holder=useRef(null),engine=useRef(null),choose=useRef(onSelect);const [ready,setReady]=useState(false),[unavailable,setUnavailable]=useState(false);
+ const holder=useRef(null),engine=useRef(null),choose=useRef(onSelect);const [ready,setReady]=useState(false),[unavailable,setUnavailable]=useState(false),[basemap,setBasemap]=useState('aerial');
  choose.current=onSelect;
  useEffect(()=>{
   let disposed=false,resize;const observer=new IntersectionObserver(async entries=>{
@@ -16,37 +16,39 @@ export default function GeographicMap({selected,onSelect}){
    try{
     const module=await import('leaflet'),L=module.default||module;if(disposed)return;
     const map=L.map(holder.current,{scrollWheelZoom:false,zoomControl:true,attributionControl:true,minZoom:5,maxZoom:12,zoomSnap:.25,tapHold:false}).setView([34.1,-117.2],7);
-    const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',updateWhenIdle:true,keepBuffer:1}).addTo(map);
+    const aerial=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery &copy; Esri, Vantor, Earthstar Geographics, GIS User Community',updateWhenIdle:true,keepBuffer:1});const streets=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',updateWhenIdle:true,keepBuffer:1});const tiles=aerial.addTo(map);
     let failures=0;tiles.on('tileerror',()=>{if(++failures>3&&!disposed)setUnavailable(true);});tiles.on('tileload',()=>{if(!disposed)setUnavailable(false);});
     const layers={};const all=L.featureGroup();
     groups.forEach(group=>{
      const polygons=countyShapes.filter(c=>group.counties.includes(c.county)).map(c=>{
-      const polygon=L.polygon(coordinates(c.d),{color:group.color,weight:1.7,fillColor:group.color,fillOpacity:.23,bubblingMouseEvents:false}).addTo(map);
+      const polygon=L.polygon(coordinates(c.d),{color:group.color,weight:1.7,fillColor:group.color,fillOpacity:.14,bubblingMouseEvents:false}).addTo(map);
       polygon.on('click',()=>choose.current(group.slug));
       const element=polygon.getElement();element.setAttribute('tabindex','0');element.setAttribute('role','button');element.setAttribute('aria-label',`Explore ${group.label}`);
       element.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose.current(group.slug);}});
-      polygon.on('mouseover',()=>polygon.setStyle({fillOpacity:.38}));polygon.on('mouseout',()=>polygon.setStyle({fillOpacity:holder.current.dataset.region===group.slug?.40:.23}));
+      polygon.on('mouseover',()=>polygon.setStyle({fillOpacity:.24}));polygon.on('mouseout',()=>polygon.setStyle({fillOpacity:holder.current.dataset.region===group.slug?.25:.14}));
       return polygon;
      });
      layers[group.slug]=L.featureGroup(polygons);layers[group.slug].eachLayer(layer=>all.addLayer(layer));
      L.marker(group.point,{icon:L.divIcon({className:'region-map-label',html:`<span>${group.label}</span>`,iconSize:[140,36],iconAnchor:[70,18]}),keyboard:true,title:`Explore ${group.label}`}).addTo(map).on('click',()=>choose.current(group.slug));
     });
-    const initial=all.getBounds();map.fitBounds(initial,{padding:[20,20]});
+    const initial=L.latLngBounds([[32.45,-119.1],[34.75,-116.4]]);map.fitBounds(initial,{padding:[20,20]});
     map.on('zoomend',()=>{holder.current.dataset.zoom=String(map.getZoom());});
-    engine.current={map,layers,initial};resize=new ResizeObserver(()=>map.invalidateSize({pan:false}));resize.observe(holder.current);setReady(true);
+    engine.current={map,layers,initial,aerial,streets};resize=new ResizeObserver(()=>map.invalidateSize({pan:false}));resize.observe(holder.current);setReady(true);
    }catch{if(!disposed)setUnavailable(true);}
   },{rootMargin:'200px'});observer.observe(holder.current);
   return()=>{disposed=true;observer.disconnect();resize?.disconnect();engine.current?.map.remove();engine.current=null;};
  },[]);
  useEffect(()=>{
   if(!ready||!engine.current)return;const {map,layers,initial}=engine.current;
-  Object.entries(layers).forEach(([slug,group])=>group.eachLayer(layer=>{layer.setStyle({fillOpacity:selected===slug?.40:.23,weight:selected===slug?2.6:1.7});layer.getElement()?.setAttribute('aria-pressed',String(selected===slug));}));
+  Object.entries(layers).forEach(([slug,group])=>group.eachLayer(layer=>{layer.setStyle({fillOpacity:selected===slug?.25:.14,weight:selected===slug?2.6:1.7});layer.getElement()?.setAttribute('aria-pressed',String(selected===slug));}));
   const animate=!matchMedia('(prefers-reduced-motion: reduce)').matches;
   const bounds=selected?(groups.find(group=>group.slug===selected).focus||layers[selected].getBounds()):initial;
   map.flyToBounds(bounds,{padding:[26,26],maxZoom:9,duration:.9,animate});
  },[selected,ready]);
+ useEffect(()=>{if(!ready||!engine.current)return;const {map,aerial,streets}=engine.current;map.removeLayer(basemap==='aerial'?streets:aerial);(basemap==='aerial'?aerial:streets).addTo(map);},[basemap,ready]);
  return <div className="geographic-map-wrap" data-reveal>
-  <div ref={holder} className="leaflet-region-map" data-region={selected||'all'} role="group" aria-label="Southern California street map with shaded service regions"/>
+  <div ref={holder} className="leaflet-region-map" data-region={selected||'all'} data-basemap={basemap} role="group" aria-label="Southern California aerial map with shaded service regions"/>
+  <div className="map-basemap" aria-label="Map view">{['aerial','streets'].map(view=><button key={view} aria-pressed={basemap===view} onClick={()=>setBasemap(view)}>{view==='aerial'?'Aerial':'Streets'}</button>)}</div>
   {!ready&&<div className="map-opening" aria-hidden="true"><span>Southern California</span><small>Coast. Cities. Service regions.</small><i/></div>}
   {selected&&<button className="geographic-map-reset" onClick={()=>onSelect(null)}>View all regions</button>}
   {unavailable&&<p className="map-connection-note">Street tiles are unavailable. Region boundaries and links remain usable.</p>}
