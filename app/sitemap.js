@@ -1,8 +1,2 @@
-export default function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.socalplastering.com";
-  const areas = ["los-angeles-county","san-diego-county","riverside-county","san-bernardino-county","orange-county"];
-  return [
-    { url: base, changeFrequency: "monthly", priority: 1 },
-    ...areas.map(slug => ({ url: `${base}/service-areas/${slug}`, changeFrequency: "monthly", priority: 0.8 }))
-  ];
-}
+import {services,areas,siteUrl} from './data';
+export default function sitemap(){return ['','/services','/our-work','/service-areas','/about','/contact','/privacy',...services.map(s=>`/services/${s.slug}`),...areas.map(a=>`/service-areas/${a.slug}`)].map(path=>({url:siteUrl+path,changeFrequency:'monthly',priority:path===''?1:path.split('/').length>2?.7:.8}));}

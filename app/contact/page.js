@@ -1,0 +1,3 @@
+import PageIntro from '../components/PageIntro';import EstimateForm from '../components/EstimateForm';import {pageMeta} from '../data';
+export const metadata=pageMeta('Request a Stucco & Plaster Estimate','Contact Diego or Isaiah at Imperial Crown. Share your project type, location and description to request a stucco, lath or plaster estimate.','/contact');
+export default function Contact(){return <main id="main"><PageIntro eyebrow="Contact" title={<>Tell us about<br/>the work.</>} description="Repairs, remodels or a new exterior. Send the details below, or call Diego or Isaiah directly." path="/contact"/><EstimateForm/></main>;}
