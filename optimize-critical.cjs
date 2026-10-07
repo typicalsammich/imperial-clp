@@ -1,3 +1,0 @@
-const sharp=require('sharp'),fs=require('node:fs/promises');
-(async()=>{await sharp('public/brand/logo-hd.png').resize(360).webp({quality:88,effort:6}).toFile('public/brand/logo-360.webp');for(const file of (await fs.readdir('public/projects')).filter(f=>f.endsWith('.webp')&&!f.includes('-small'))){await sharp('public/projects/'+file).resize({width:640,withoutEnlargement:true}).webp({quality:80,effort:6}).toFile('public/projects/'+file.replace('.webp','-small.webp'));}console.log('Small responsive photos, lightweight header logo and site icon prepared.');})().catch(e=>{console.error(e);process.exitCode=1});
-
